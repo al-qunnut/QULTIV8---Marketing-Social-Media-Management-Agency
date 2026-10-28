@@ -1,0 +1,23 @@
+{
+  "name": "qultiv8",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Qultiv8 marketing agency website and contact API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "compression": "^1.8.2",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.1.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
+  }
+}
