@@ -66,6 +66,16 @@ app.get("/api/config", (_request, response) => {
   });
 });
 
+app.get("/robots.txt", (request, response) => {
+  const siteUrl = `${request.protocol}://${request.get("host")}`;
+  response.type("text/plain").send(`User-agent: *\nAllow: /\nSitemap: ${siteUrl}/sitemap.xml\n`);
+});
+
+app.get("/sitemap.xml", (request, response) => {
+  const siteUrl = `${request.protocol}://${request.get("host")}`;
+  response.type("application/xml").send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>${siteUrl}/</loc></url></urlset>`);
+});
+
 app.post("/api/contact", (request, response) => {
   const body = request.body && typeof request.body === "object" ? request.body : {};
   const name = clean(body.name, 100);
