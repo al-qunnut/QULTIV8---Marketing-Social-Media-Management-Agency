@@ -88,6 +88,7 @@ app.post("/api/contact", (request, response) => {
 app.get("/", (_request, response) => response.sendFile(path.join(root, "index.html")));
 app.get("/styles.css", (_request, response) => response.sendFile(path.join(root, "styles.css"), { maxAge: "1d" }));
 app.get("/script.js", (_request, response) => response.sendFile(path.join(root, "script.js"), { maxAge: "1d" }));
+app.use("/assets", express.static(path.join(root, "assets")));
 app.use((_request, response) => response.status(404).json({ error: "Not found" }));
 
 app.listen(port, () => {

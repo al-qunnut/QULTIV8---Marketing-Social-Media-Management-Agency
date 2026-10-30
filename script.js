@@ -52,7 +52,16 @@ window.addEventListener("hashchange",function(){go(location.hash.slice(1)||"home
 $("#menu").onclick=function(){var n=$("#nav"),m=$("#menu"),open=!n.classList.contains("menu-open");n.classList.toggle("menu-open",open);m.classList.toggle("is-open",open);m.setAttribute("aria-expanded",open);m.setAttribute("aria-label",open?"Close navigation menu":"Open navigation menu")};
 function grid(f){
   $("#pgrid").innerHTML=P.filter(function(p){return f==="all"||p.s===f}).map(function(p){
-    return '<button class="card pc" data-p="'+p.id+'"><div class="tile '+p.k+'"><small>Concept · '+p.s+'</small>'+p.line+'</div><div class="in"><span class="tag">'+p.s+'</span><span class="tag">'+p.type+'</span><h3>'+p.name+'</h3><p>'+p.goal+'</p></div></button>';
+    var tile=p.id==="palmview"
+      ? '<div class="tile tile-image '+p.k+'"><img src="assets/Palmview%20Gardens%20Campaign%20Poster.png" alt="Palmview Gardens campaign poster"></div>'
+      : p.id==="listing"
+        ? '<div class="tile tile-image '+p.k+'"><img src="assets/Modern%20Real%20Estate%20Listing%20Banner.png" alt="Modern real estate listing"></div>'
+        : p.id==="taskloop"
+          ? '<div class="tile tile-image '+p.k+'"><img src="assets/TaskLoop_%20Less%20Chasing,%20More%20Growing.png" alt="TaskLoop campaign image"></div>'
+            : p.id==="gadgethub"
+              ? '<div class="tile tile-image '+p.k+'"><img src="assets/Festive%20Tech%20Gifts%20by%20GadgetHub.png" alt="Festive Tech Gifts by GadgetHub campaign image"></div>'
+              : '<div class="tile '+p.k+'"><small>Concept · '+p.s+'</small>'+p.line+'</div>';
+    return '<button class="card pc" data-p="'+p.id+'">'+tile+'<div class="in"><span class="tag">'+p.s+'</span><span class="tag">'+p.type+'</span><h3>'+p.name+'</h3><p class="card-line">'+p.line+'</p><p>'+p.goal+'</p></div></button>';
   }).join("");
 }
 $("#chips").addEventListener("click",function(e){var c=e.target.closest(".chip");if(!c)return;$$('.chip').forEach(function(x){x.classList.toggle("on",x===c)});grid(c.dataset.f)});
@@ -60,11 +69,29 @@ $("#pgrid").addEventListener("click",function(e){
   var c=e.target.closest("[data-p]");if(!c)return;
   var p=P.filter(function(x){return x.id===c.dataset.p})[0];
   $("#dt").textContent=p.name;
-  $("#dbody").innerHTML='<span class="tag">Concept work</span><span class="tag">'+p.s+'</span>'
+  var campaignImage=p.id==="palmview"
+    ? '<img class="description-image" src="assets/Palmview%20Gardens%20Campaign%20Poster.png" alt="Palmview Gardens campaign poster">'
+    : p.id==="listing"
+      ? '<img class="description-image" src="assets/Modern%20Real%20Estate%20Listing%20Banner.png" alt="Modern real estate listing">'
+      : p.id==="taskloop"
+        ? '<img class="description-image" src="assets/TaskLoop_%20Less%20Chasing,%20More%20Growing.png" alt="TaskLoop campaign image">'
+        : p.id==="gadgethub"
+          ? '<img class="description-image" src="assets/Festive%20Tech%20Gifts%20by%20GadgetHub.png" alt="Festive Tech Gifts by GadgetHub campaign image">'
+          : '';
+  var sample=p.id==="palmview"
+    ? '<div class="sample-video"><video controls preload="metadata" playsinline aria-label="5 questions to ask before you pay any developer"><source src="assets/Palmview%205%20question%20Content.mp4" type="video/mp4">Your browser does not support video playback.</video></div>'
+    : p.id==="listing"
+      ? '<img class="sample-image" src="assets/Modern%20Purple%20Real%20Estate%20Listing.png" alt="Modern purple estate listing sample post">'
+      : p.id==="taskloop"
+        ? '<img class="sample-image" src="assets/TaskLoop_%20Stress-Free%20Payment%20Follow-Ups.png" alt="TaskLoop stress-free payment follow-ups sample post">'
+        : p.id==="gadgethub"
+          ? '<img class="sample-image" src="assets/Holiday%20Phone-Buying%20Guide.png" alt="Holiday phone-buying guide sample post">'
+        : '<div class="tile sample-tile '+p.k+'"><small>'+p.name+'</small>'+p.head+'</div>';
+  $("#dbody").innerHTML=campaignImage+'<span class="tag">Concept work</span><span class="tag">'+p.s+'</span>'
    +'<h4>Goal</h4><p>'+p.goal+'</p><h4>Big idea</h4><p>'+p.idea+'</p>'
    +'<h4>Content pillars</h4><div>'+p.pil.map(function(x){return '<span class="tag">'+x+'</span>'}).join("")+'</div>'
    +'<h4>Plan</h4><ul class="t">'+p.plan.map(function(x){return '<li>'+x+'</li>'}).join("")+'</ul>'
-    +'<h4>Sample post</h4><div class="tile sample-tile '+p.k+'"><small>'+p.name+'</small>'+p.head+'</div><p class="cap">'+p.cap+'</p>'
+    +'<h4>Sample post</h4>'+sample+'<p class="cap">'+p.cap+'</p>'
    +'<h4>What we would measure</h4><p>'+p.kpi+'</p>'
    +'<div class="row"><button class="btn" id="dgo">Want a plan like this?</button></div>';
   $("#dlg").showModal();
